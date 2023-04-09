@@ -58,7 +58,7 @@ jobs:
       with:
         python-version: '3.9'
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install -r ./chatbot/requirements.txt
     - name: Build
       run: python setup.py build
     - name: Archive build artifacts
