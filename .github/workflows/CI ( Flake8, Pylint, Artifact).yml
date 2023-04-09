@@ -47,7 +47,7 @@ jobs:
       run: |
         pylint $(git ls-files '*.py')
 
-  Build Artifact:
+  Build:
     runs-on: ubuntu-latest
     needs: Lint
     steps:
@@ -67,9 +67,9 @@ jobs:
         name: build_app
         path: chatbot
 
-  Download Artifact:
+  Download:
     runs-on: ubuntu-latest
-    needs: Build Artifact
+    needs: Build
     steps:
     - name: Download build artifact
       uses: actions/download-artifact@v3
