@@ -60,7 +60,7 @@ jobs:
     - name: Install dependencies
       run: pip install -r ./chatbot/requirements.txt
     - name: Build
-      run: python setup.py build
+      run: python ./chatbot/setup.py build
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       with:
