@@ -1,3 +1,4 @@
+"""Setup file for build project"""
 from setuptools import setup, find_packages
 
 setup(
