@@ -1,6 +1,4 @@
-"""
-Calendar bot
-"""
+"""Calendar bot for Telegram"""
 import locale
 import os
 import re
