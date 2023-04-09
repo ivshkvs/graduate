@@ -22,7 +22,7 @@ chkconfig httpd on
 EOF
 
   tags = {
-    Name  = "${var.server_name}-WebServer"
+    Name  = "${var.server_name}server_1"
     Owner = "Saveli Ivashkov"
   }
 }
