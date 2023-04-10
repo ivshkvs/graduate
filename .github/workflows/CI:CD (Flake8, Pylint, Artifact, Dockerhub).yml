@@ -70,7 +70,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: build_app
-        path: dist/
+        path: ./chatbot
         
   Dockerhub:
     runs-on: ubuntu-latest
@@ -83,13 +83,13 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: build_app
-        path: dist/
+        path: ./chatbot
 
     - name: Cache artifact
       uses: actions/cache@v3
       with:
         path: |
-            dist/
+            ./chatbot
         key: build_app
     
     - name: Build Docker image
