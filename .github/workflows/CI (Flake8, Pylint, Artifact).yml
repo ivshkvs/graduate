@@ -1,4 +1,4 @@
-name: CI ( Flake8, Pylint, Artifact)
+name: CI (Flake8, Pylint, Artifact)
 
 on:
   push:
