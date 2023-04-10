@@ -14,7 +14,7 @@ resource "aws_instance" "bot" {
   user_data	= file("docker.sh")
 
   tags = {
-    Name  = "${var.server_name}server002"
+    Name  = "${var.server_name}server003"
     Owner = "Saveli Ivashkov"
   }
 }
