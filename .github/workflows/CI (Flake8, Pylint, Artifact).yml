@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
     
 env:
-  IMAGE_NAME: ivshkvs/tg_bot123
+  IMAGE_NAME: ivshkvs/tg_bot
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   
