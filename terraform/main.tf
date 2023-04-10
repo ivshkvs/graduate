@@ -13,6 +13,7 @@ resource "aws_instance" "bot" {
   vpc_security_group_ids = [aws_security_group.bot.id]
   user_data              = <<EOF
 #!/bin/bash
+ls -la
 sudo apt update -y
 sudo apt install -y docker
 sudo service docker start
