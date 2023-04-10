@@ -1,0 +1,44 @@
+name: CD (Dockerhub)
+
+needs: CI (Flake8, Pylint, Artifact)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  IMAGE_NAME: tg_bot
+  DOCKERFILE: ./docker/Dockerfile
+
+jobs:
+  Dockerbuild:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ env.DOCKER_USERNAME }}
+        password: ${{ env.DOCKER_PASSWORD }}
+    - name: Build Docker image
+      run: docker build -t ${{ env.IMAGE_NAME }} -f ${{ env.DOCKERFILE }} .
+
+    - name: Tag Docker image
+      run: docker tag ${{ env.IMAGE_NAME }} ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+  Dockerpush:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Push Docker image to Docker Hub
+      run: docker push ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: build_app
+        path: /tmp/tg_bot/
+
