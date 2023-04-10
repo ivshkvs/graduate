@@ -14,7 +14,7 @@ resource "aws_instance" "bot" {
   user_data	= file("docker.sh")
 
   tags = {
-    Name  = "${var.server_name}server_${formatdate("YYYY-MM-DD-HH-MM-SS", timestamp())}"
+    Name  = "${var.server_name}server_${timestamp()}"
     Owner = "Saveli Ivashkov"
   }
 }
