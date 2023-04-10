@@ -16,7 +16,7 @@ resource "aws_instance" "bot" {
   EOF
 
   tags = {
-    Name  = "${var.server_name}server"
+    Name  = "${var.server_name}server2"
     Owner = "Saveli Ivashkov"
   }
 }
