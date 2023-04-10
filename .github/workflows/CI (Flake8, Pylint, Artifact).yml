@@ -96,9 +96,6 @@ jobs:
     - name: Build Docker image
       run: docker build -t ${{ env.IMAGE_NAME }} -f ${{ env.DOCKERFILE }} .
 
-    - name: Tag Docker image
-      run: docker tag ${{ env.IMAGE_NAME }} ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
   Dockerpush:
     runs-on: ubuntu-latest
     needs: Dockerbuild
