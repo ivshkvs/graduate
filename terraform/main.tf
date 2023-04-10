@@ -11,12 +11,10 @@ resource "aws_instance" "bot" {
   ami                    = data.aws_ami.latest_amazon_linux.id
   instance_type          = var.server_size
   vpc_security_group_ids = [aws_security_group.bot.id]
-  user_data              = <<EOF
-  ${file("sh/docker.sh")}
-  EOF
+  user_data              = file("sh/docker.sh")
 
   tags = {
-    Name  = "${var.server_name}server01"
+    Name  = "${var.server_name}server02"
     Owner = "Saveli Ivashkov"
   }
 }
