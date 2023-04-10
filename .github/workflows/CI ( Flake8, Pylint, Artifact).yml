@@ -5,10 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
-env:
-      BUILD_NAME: ${{ github.run_number }}
-      
+     
 jobs:
   Test:
     runs-on: ubuntu-latest
@@ -63,19 +60,12 @@ jobs:
     - name: Install dependencies
       run: pip install -r ./chatbot/requirements.txt
     - name: Build
-      run: python ./chatbot/setup.py build
-    - name: Set Name Variables
-      run: |
-          echo "version=$(git describe)" >> $GITHUB_ENV
-          cd .release
-          echo "folder_name=$(ls -d */ | sed 's:/*$::')" >> $GITHUB_ENV    
+      run: python ./chatbot/setup.py build  
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.folder_name }}-${{ env.version }}
-        path: |
-            .release/*/
-            !.release/*.zip
+        name: build_app
+        path: chatbot
 
   Download:
     runs-on: ubuntu-latest
@@ -84,4 +74,4 @@ jobs:
     - name: Download build artifact
       uses: actions/download-artifact@v3
       with:
-        name: ${{ env.folder_name }}-${{ env.version }}
+        name: build_app
