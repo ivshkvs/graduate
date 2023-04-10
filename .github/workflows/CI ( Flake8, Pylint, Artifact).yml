@@ -64,11 +64,18 @@ jobs:
       run: pip install -r ./chatbot/requirements.txt
     - name: Build
       run: python ./chatbot/setup.py build
+    - name: Set Name Variables
+      run: |
+          echo "version=$(git describe)" >> $GITHUB_ENV
+          cd .release
+          echo "folder_name=$(ls -d */ | sed 's:/*$::')" >> $GITHUB_ENV    
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: build_app $BUILD_NAME
-        path: chatbot
+        name: ${{ env.folder_name }}-${{ env.version }}
+        path: |
+            .release/*/
+            !.release/*.zip
 
   Download:
     runs-on: ubuntu-latest
@@ -77,4 +84,4 @@ jobs:
     - name: Download build artifact
       uses: actions/download-artifact@v3
       with:
-        name: build_app $BUILD_NAME
+        name: ${{ env.folder_name }}-${{ env.version }}
