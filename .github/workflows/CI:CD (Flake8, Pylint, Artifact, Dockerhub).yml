@@ -70,11 +70,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: build_app
-        path: ./chatbot
-    - name: Set run number environment variable
-      run: echo "export RUN_NUMBER=${{ github.run_number }}" >> $GITHUB_ENV
-    - name: Update file with run number
-      run: sed -i "s/RUN_NUMBER_PLACEHOLDER/${{ env.RUN_NUMBER }}/" ./terraform/docker.sh        
+        path: ./chatbot       
   
   Dockerhub:
     runs-on: ubuntu-latest
@@ -87,7 +83,7 @@ jobs:
       with:
         context: ./docker
         push: false
-        tags: ${{ secrets.IMAGE_NAME }}:${{ github.run_number }} 
+        tags: ${{ secrets.IMAGE_NAME }}:latest 
     - name: Login to DockerHub
       uses: docker/login-action@v2
       with:
@@ -99,4 +95,4 @@ jobs:
       with:
         context: ./docker
         push: true
-        tags: ${{ secrets.IMAGE_NAME }}:${{ github.run_number }}
+        tags: ${{ secrets.IMAGE_NAME }}:latest
