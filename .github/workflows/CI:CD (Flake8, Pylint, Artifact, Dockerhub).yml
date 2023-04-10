@@ -70,7 +70,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: build_app
-        path: chatbot
+        path: .
         
   Dockerhub:
     runs-on: ubuntu-latest
