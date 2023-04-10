@@ -11,7 +11,7 @@ resource "aws_instance" "bot" {
   ami                    = data.aws_ami.latest_amazon_linux.id
   instance_type          = var.server_size
   vpc_security_group_ids = [aws_security_group.bot.id]
-  user_data = file("sh/docker.sh")
+  user_data	= file("docker.sh")
 
   tags = {
     Name  = "${var.server_name}server06"
