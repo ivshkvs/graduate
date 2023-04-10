@@ -17,9 +17,6 @@ apt update -y
 apt install -y docker
 service docker start
 usermod -a -G docker ubuntu
-docker login -u ${var.DOCKER_USERNAME} -p ${var.DOCKER_PASSWORD}
-docker pull docker pull ivshkvs/tg_bot:32
-docker run -d ivshkvs/tg_bot:32
 EOF
 
   tags = {
