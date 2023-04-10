@@ -7,8 +7,7 @@ on:
     branches: [ "main" ]
     
 env:
-  #DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-  IMAGE_NAME: ivshkvs/tg_bot
+  IMAGE_NAME: ivshkvs/tg_bot123
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   
@@ -94,8 +93,7 @@ jobs:
       with:
         context: ./docker
         push: false
-        tags: ${{ env.IMAGE_NAME }}:${{ github.run_number }}
-          
+        tags: ${{ env.IMAGE_NAME }}:${{ github.run_number }}-$(date '+%d%m%Y')          
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
@@ -107,4 +105,4 @@ jobs:
       with:
         context: ./docker
         push: true
-        tags: ${{ env.IMAGE_NAME }}:${{ github.run_number }}
+        tags: ${{ env.IMAGE_NAME }}:${{ github.run_number }}-$(date '+%d%m%Y')
