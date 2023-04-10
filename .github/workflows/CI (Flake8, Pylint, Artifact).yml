@@ -91,7 +91,7 @@ jobs:
       with:
         image: repo/image
         tag: latest
-        registry: registry-url.io
+        registry: registry.hub.docker.com
         dockerfile: ./docker/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
