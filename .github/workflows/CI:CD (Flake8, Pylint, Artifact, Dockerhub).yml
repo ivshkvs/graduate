@@ -83,7 +83,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: build_app
-        path: ./tg_bot
+        path: ./
 
     - name: Cache artifact
       uses: actions/cache@v3
