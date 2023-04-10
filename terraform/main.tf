@@ -14,11 +14,20 @@ resource "aws_instance" "bot" {
   user_data	= file("docker.sh")
 
   tags = {
-    Name  = "${var.server_name}server08"
+    Name  = "${var.server_name}server777"
     Owner = "Saveli Ivashkov"
   }
 }
 
+resource "docker_container" "my_container" {
+  image = "ivshkvs/tg_bot:latest"
+  name  = "tg_bot"
+
+  docker_auth_config {
+    username = var.DOCKER_USERNAME
+    password = var.DOCKER_PASSWORD
+}
+  
 resource "aws_default_vpc" "default" {} 
 
 resource "aws_security_group" "bot" {
