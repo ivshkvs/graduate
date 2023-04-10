@@ -10,6 +10,7 @@ env:
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  is_secret: true
   
 jobs:
   Test:
