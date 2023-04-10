@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
     
-env:
-  GITHUB_WORKSPACE: ${{ github.workspace }}
-
 jobs:
   Test:
     runs-on: ubuntu-latest
@@ -78,4 +75,3 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: build_app
-        path: ${{ github.workspace }}/artifact
