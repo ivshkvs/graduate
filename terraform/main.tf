@@ -7,6 +7,15 @@ data "aws_ami" "latest_amazon_linux" {
   }
 }
 
+terraform {
+  required_providers {
+    docker = {
+      source = "kreuzwerker/docker"
+      version = "~> 3.0.1"
+    }
+  }
+}
+
 provider "docker" {}
 
 resource "docker_installation_package" "install" {
