@@ -7,6 +7,20 @@ data "aws_ami" "latest_amazon_linux" {
   }
 }
 
+provider "docker" {}
+
+resource "docker_installation_package" "install" {
+  package_url = "https://get.docker.com/"
+}
+
+resource "docker_image" "bot_image" {
+  name = "ivshkvs/tg_bot:latest"
+  auth {
+    username = var.DOCKER_USERNAME
+    password = var.DOCKER_PASSWORD
+  }
+}
+
 resource "aws_instance" "bot" {
   ami                    = data.aws_ami.latest_amazon_linux.id
   instance_type          = var.server_size
