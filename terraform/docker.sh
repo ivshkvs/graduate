@@ -13,4 +13,4 @@ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-c
 sudo chmod +x /usr/local/bin/docker-compose
 sudo systemctl enable docker
 sudo docker login -u ivshkvs -p dckr_pat_w1f9n80eI3PRBXwH_oQZszObTPQ
-sudo docker pull ivshkvs/tg_bot:66
+sudo docker pull ivshkvs/tg_bot:latest
