@@ -1,27 +1,63 @@
-provider "aws" {
-  region = "eu-central-1"
+data "aws_ami" "ubuntu" {
+  owners      = ["099720109477"]
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
 }
 
-resource "aws_instance" "example" {
-  ami           = "ami-0ec7f9846da6b0f61"
-  instance_type = "t2.micro"
-  key_name      = "my-key"
+resource "aws_instance" "bot" {
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.server_size
+  vpc_security_group_ids = [aws_security_group.bot.id]
+  user_data              = <<EOF
+#!/bin/bash
+apt update -y
+apt install -y docker
+service docker start
+usermod -a -G docker ubuntu
+docker login -u ${var.DOCKER_USERNAME} -p ${var.DOCKER_PASSWORD}
+docker pull docker pull ivshkvs/tg_bot:32
+docker run -d ivshkvs/tg_bot:32
+EOF
 
   tags = {
-    Name = "example-instance"
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update -y",
-      "sudo apt install -y docker",
-      "sudo service docker start",
-      "sudo usermod -a -G docker ubuntu",
-      "docker login -u ${var.DOCKER_USERNAME} -p ${var.DOCKER_PASSWORD}",
-      "docker pull docker pull ivshkvs/tg_bot:32",
-      "docker run -d ivshkvs/tg_bot:32"
-    ]
+    Name  = "${var.server_name}server"
+    Owner = "Saveli Ivashkov"
   }
 }
 
+resource "aws_default_vpc" "default" {} 
 
+resource "aws_security_group" "bot" {
+  name_prefix = "${var.server_name}security_group"
+  vpc_id      = aws_default_vpc.default.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name  = "${var.server_name}security_group"
+    Owner = "Saveli Ivashkov"
+  }
+}
+
+resource "aws_eip" "bot" {
+  vpc      = true
+  instance = aws_instance.bot.id
+  tags = {
+    Name  = "${var.server_name}ip"
+    Owner = "Saveli Ivashkov"
+  }
+}
