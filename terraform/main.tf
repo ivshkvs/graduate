@@ -11,19 +11,10 @@ resource "aws_instance" "bot" {
   ami                    = data.aws_ami.latest_amazon_linux.id
   instance_type          = var.server_size
   vpc_security_group_ids = [aws_security_group.bot.id]
-  user_data = <<-EOF
-    #!/bin/bash
-    set -ex
-    sudo yum update -y
-    sudo amazon-linux-extras install docker -y
-    sudo service docker start
-    sudo usermod -a -G docker ec2-user
-    sudo curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
-  EOF
+  user_data = file("sh/docker.sh")
 
   tags = {
-    Name  = "${var.server_name}server03"
+    Name  = "${var.server_name}server06"
     Owner = "Saveli Ivashkov"
   }
 }
