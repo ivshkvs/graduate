@@ -7,35 +7,30 @@ data "aws_ami" "latest_amazon_linux" {
   }
 }
 
-resource "aws_instance" "web" {
+resource "aws_instance" "bot" {
   ami                    = data.aws_ami.latest_amazon_linux.id
   instance_type          = var.server_size
   vpc_security_group_ids = [aws_security_group.web.id]
   user_data              = <<EOF
 #!/bin/bash
 yum -y update
-yum -y install httpd
-myip=`curl http://169.254.169.254/latest/meta-data/local-ipv4`
-echo "<h2>${var.server_name}-WebServer with IP: $myip</h2><br>Build by Terraform!"  >  /var/www/html/index.html
-sudo service httpd start
-chkconfig httpd on
 EOF
 
   tags = {
-    Name  = "${var.server_name}server_1"
+    Name  = "${var.server_name}server"
     Owner = "Saveli Ivashkov"
   }
 }
 
-resource "aws_default_vpc" "default" {} # This need to be added since AWS Provider v4.29+ to get VPC id
+resource "aws_default_vpc" "default" {} 
 
-resource "aws_security_group" "web" {
-  name_prefix = "${var.server_name}-WebServer-SG"
-  vpc_id      = aws_default_vpc.default.id # This need to be added since AWS Provider v4.29+ to set VPC id
+resource "aws_security_group" "bot" {
+  name_prefix = "${var.server_name}security_group"
+  vpc_id      = aws_default_vpc.default.id
 
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -47,16 +42,16 @@ resource "aws_security_group" "web" {
   }
 
   tags = {
-    Name  = "${var.server_name}-WebServer SecurityGroup"
+    Name  = "${var.server_name}security_group"
     Owner = "Saveli Ivashkov"
   }
 }
 
-resource "aws_eip" "web" {
-  vpc      = true # Need to add in new AWS Provider version
+resource "aws_eip" "bot" {
+  vpc      = true
   instance = aws_instance.web.id
   tags = {
-    Name  = "${var.server_name}-WebServer-IP"
+    Name  = "${var.server_name}ip"
     Owner = "Saveli Ivashkov"
   }
 }
