@@ -84,6 +84,7 @@ jobs:
         
   Dockerhub:
     runs-on: ubuntu-latest
+    needs: Download
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
