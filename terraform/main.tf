@@ -1,14 +1,14 @@
-data "aws_ami" "ubuntu" {
-  owners      = ["099720109477"]
+data "aws_ami" "latest_amazon_linux" {
+  owners      = ["amazon"]
   most_recent = true
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
 }
 
 resource "aws_instance" "bot" {
-  ami                    = data.aws_ami.ubuntu.id
+  ami                    = data.aws_ami.latest_amazon_linux.id
   instance_type          = var.server_size
   vpc_security_group_ids = [aws_security_group.bot.id]
   user_data              = <<EOF
@@ -16,7 +16,7 @@ resource "aws_instance" "bot" {
   EOF
 
   tags = {
-    Name  = "${var.server_name}server5"
+    Name  = "${var.server_name}server01"
     Owner = "Saveli Ivashkov"
   }
 }
