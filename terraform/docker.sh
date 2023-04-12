@@ -15,4 +15,5 @@ sudo systemctl enable docker
 sudo docker login -u ivshkvs -p dckr_pat_w1f9n80eI3PRBXwH_oQZszObTPQ \
 && sudo docker pull ivshkvs/tg_bot:latest \
 && sudo docker run -d ivshkvs/tg_bot:latest \
-&& sudo docker run -p 9090:9090 prom/prometheus
+sleep
+&& sudo docker run -d -p 9090:9090 prom/prometheus
