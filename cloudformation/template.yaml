@@ -21,7 +21,7 @@ Resources:
           docker login -u ivshkvs -p dckr_pat_w1f9n80eI3PRBXwH_oQZszObTPQ
           docker network create prometheus-network --driver bridge
           docker run -d --network prometheus-network ivshkvs/tg_bot:latest
-          docker run -d --network prometheus-network bitnami/prometheus
+          docker run -d --network prometheus-network -p 9090:9090 bitnami/prometheus
   InstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
