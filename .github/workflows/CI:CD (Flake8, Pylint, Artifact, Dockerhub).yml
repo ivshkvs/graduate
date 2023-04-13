@@ -116,5 +116,9 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-central-1
-    - name: Execute CloudFormation Change Set
-      run: aws cloudformation create-change-set --stack-name TELEGRAM-BOT --template-body ./cloudformation/template.yaml --change-set-name Redeploy --change-set-type CREATE --capabilities CAPABILITY_IAM 
+    - name: Create CloudFormation Stack
+      run: |
+          aws cloudformation create-stack \
+            --stack-name TELEGRAM-BOT \
+            --template-body ./cloudformation/template.yaml --force-update \
+            --capabilities CAPABILITY_IAMes CAPABILITY_IAM 
