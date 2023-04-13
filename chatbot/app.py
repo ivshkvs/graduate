@@ -61,7 +61,7 @@ def handle_date(message):
 
 # Launch bot
 if __name__ == '__main__':
-    start_http_server(8000)
+    start_http_server(8001)
     while True:
         process_request(random.random())
     bot.polling()
