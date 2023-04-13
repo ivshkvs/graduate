@@ -18,9 +18,14 @@ Resources:
           amazon-linux-extras install docker -y
           systemctl start docker
           usermod -aG docker ec2-user
-          docker login -u ivshkvs -p dckr_pat_w1f9n80eI3PRBXwH_oQZszObTPQ
-          docker network create prometheus-network --driver bridge
-          docker run -d --network prometheus-network ivshkvs/tg_bot:latest
+          aws s3 cp s3://calendartelebucket/chatbot ./chatbot
+          cd ./chatbot
+          docker run -v ./chatbot:./chatbot -d python:3.11-slim python3 ./chatbot/app.py
+          #tar -xzf app.tar.gz
+          #cd app
+          #docker login -u ivshkvs -p dckr_pat_w1f9n80eI3PRBXwH_oQZszObTPQ
+          #docker network create prometheus-network --driver bridge
+          #docker run -d --network prometheus-network ivshkvs/tg_bot:latest
   InstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
@@ -33,8 +38,4 @@ Resources:
         - IpProtocol: "tcp"
           FromPort: "9090"
           ToPort: "9090"
-          CidrIp: "0.0.0.0/0"
-        - IpProtocol: "tcp"
-          FromPort: "8000"
-          ToPort: "8000"
           CidrIp: "0.0.0.0/0"
