@@ -120,5 +120,5 @@ jobs:
       run: |
           aws cloudformation create-stack \
             --stack-name TELEGRAM-BOT \
-            --template-body ./cloudformation/template.yaml --force-update \
+            --template-body ./cloudformation/template.yaml \
             --capabilities CAPABILITY_IAMes CAPABILITY_IAM 
