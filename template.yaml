@@ -1,13 +1,40 @@
----
 AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  UsePreviousTemplate:
+    Type: String
+    AllowedValues: ['true', 'false']
+    Default: 'false'    
 Resources:
+  InstanceSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "Enable SSH and Prometheus access"
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: "tcp"
+          FromPort: "9090"
+          ToPort: "9090"
+          CidrIp: "0.0.0.0/0"
+          
   EC2Instance:
-    Type: "AWS::EC2::Instance"
+    Type: !If 
+      - UsePreviousTemplate 
+      - "AWS::CloudFormation::Stack"
+      - "AWS::EC2::Instance"
     Properties:
       ImageId: "ami-01fd08d7b0955d6d5"
       InstanceType: "t2.micro"
       SecurityGroupIds:
-        - !Ref InstanceSecurityGroup
+        - !If 
+          - UsePreviousTemplate 
+          - !Ref InstanceSecurityGroup 
+          - !If 
+            - EC2SecurityGroup 
+            - !Ref EC2SecurityGroup 
+            - !Ref "AWS::NoValue"
       KeyName: "aws"
       Tags:
         - Key: Name
@@ -22,23 +49,7 @@ Resources:
           docker login -u ivshkvs -p dckr_pat_w1f9n80eI3PRBXwH_oQZszObTPQ
           docker run -d ivshkvs/tg_bot:latest
           docker run -d -p 9090:9090 prom/prometheus
-          
-Parameters:
-  UsePreviousTemplate:
-    Type: String
-    AllowedValues: ['true', 'false']
-    Default: 'false'    
-          
-  InstanceSecurityGroup:
-    Type: "AWS::EC2::SecurityGroup"
-    Properties:
-      GroupDescription: "Enable SSH and Prometheus access"
-      SecurityGroupIngress:
-        - IpProtocol: "tcp"
-          FromPort: "22"
-          ToPort: "22"
-          CidrIp: "0.0.0.0/0"
-        - IpProtocol: "tcp"
-          FromPort: "9090"
-          ToPort: "9090"
-          CidrIp: "0.0.0.0/0"
+    TemplateURL: !If 
+      - UsePreviousTemplate 
+      - !Sub "https://s3.amazonaws.com/${calendartelebucket}/${template.yaml}"
+      - !Ref "AWS::NoValue"
