@@ -1,6 +1,5 @@
 FROM bitnami/prometheus:latest
-RUN apt-get update && apt-get install -y \
-    python3 \
+RUN apt update && apt install python3 -y \
     python3-pip \
     git \
     locales
