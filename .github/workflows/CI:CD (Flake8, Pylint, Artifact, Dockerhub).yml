@@ -120,6 +120,6 @@ jobs:
       run: |
           aws cloudformation deploy \
           --stack-name TELEGRAM-BOT \
-          --template-file template.yaml \
+          --template-file /cloudformation/template.yaml \
           --capabilities CAPABILITY_IAM
 
