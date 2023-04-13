@@ -1,9 +1,11 @@
 AWSTemplateFormatVersion: "2010-09-09"
+
 Parameters:
   UsePreviousTemplate:
     Type: String
     AllowedValues: ['true', 'false']
-    Default: 'false'    
+    Default: 'false'
+    
 Resources:
   InstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
