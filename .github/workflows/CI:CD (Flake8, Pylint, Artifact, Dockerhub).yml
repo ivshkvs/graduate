@@ -106,4 +106,23 @@ jobs:
        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
       run: |
        curl -H "Content-Type: application/json" -X POST -d '{"content":"CI/CD COMPLETE"}' $DISCORD_WEBHOOK_URL 
-    
+
+  CloudFormation:
+    runs-on: ubuntu-latest
+    needs: Discord
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+    - name: Deploy Stack
+      run: |
+          aws cloudformation deploy \
+          --stack-name TELEGRAM-BOT \
+          --template-file cloudformation/template.yaml \
+          --capabilities CAPABILITY_IAM
+
