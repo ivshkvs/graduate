@@ -23,7 +23,7 @@ def handle_start(message):
     """Handler for /start command"""
     user_name = message.from_user.first_name
     reply_text = (
-        f"Привет, {user_name}! Я бот, который может определить день недели по дате. "
+        f"Hi, {user_name}! Я бот, который может определить день недели по дате. "
         f"Отправь мне дату в формате ДД.ММ.ГГГГ."
     )
     bot.send_message(message.chat.id, reply_text)
