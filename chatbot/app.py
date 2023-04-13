@@ -6,8 +6,9 @@ import os
 import re
 from datetime import datetime
 from textwrap import wrap
-from prometheus_client import start_http_server, Summary
 
+# pylint: disable=E0401
+from prometheus_client import start_http_server, Summary
 # pylint: disable=E0401
 import dotenv
 # pylint: disable=E0401
