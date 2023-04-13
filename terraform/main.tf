@@ -14,7 +14,7 @@ resource "aws_instance" "bot" {
   lifecycle {
     create_before_destroy = true
   }
-  user_data	= file("docker.sh")
+  user_data	= "${file("docker.sh")} + "${file("prometheus.sh")}"
 
   tags = {
     Name  = "${var.server_name}server_${timestamp()}"
