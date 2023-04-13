@@ -34,7 +34,7 @@ def handle_start(message):
     """Handler for /start message"""
     user_name = message.from_user.first_name
     reply_text = (
-        f"Привет, {user_name}! Я бот, который может определить день недели по дате. "
+        f"Hola, {user_name}! Я бот, который может определить день недели по дате. "
         f"Отправь мне дату в формате ДД.ММ.ГГГГ."
     )
     bot.send_message(message.chat.id, reply_text)
@@ -61,7 +61,7 @@ def handle_date(message):
 
 # Launch bot
 if __name__ == '__main__':
-    bot.polling()
     start_http_server(8000)
     while True:
         process_request(random.random())
+    bot.polling()
