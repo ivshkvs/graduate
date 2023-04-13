@@ -23,15 +23,11 @@ Resources:
           docker run -d ivshkvs/tg_bot:latest
           docker run -d -p 9090:9090 prom/prometheus
           
-    UpdatePolicy:
-      AutoScalingRollingUpdate:
-        MinInstancesInService: '1'
-        MaxBatchSize: '1'
-        PauseTime: PT5M
-        WaitOnResourceSignals: true
-        SuspendProcesses:
-          - 'HealthCheck'
-      ChangeSetReplace: true      
+Parameters:
+  UsePreviousTemplate:
+    Type: String
+    AllowedValues: ['true', 'false']
+    Default: 'false'    
           
   InstanceSecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
