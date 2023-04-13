@@ -67,7 +67,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: build_app
-        path: ./chatbot       
+        path: ./build/     
   
   Dockerhub:
     runs-on: ubuntu-latest
@@ -86,7 +86,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-          
     - name: Push Docker image to DockerHub
       uses: docker/build-push-action@v4
       with:
@@ -116,6 +115,9 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-central-1
+    - name: Upload to S3
+      run: |
+       aws s3 cp ./build/ s3://calendartelebucket/ --recursive
     - name: Deploy Stack
       run: |
           aws cloudformation deploy \
