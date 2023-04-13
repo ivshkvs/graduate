@@ -1,6 +1,4 @@
 """Calendar bot for Telegram"""
-import random
-import time
 import locale
 import os
 import re
@@ -8,21 +6,12 @@ from datetime import datetime
 from textwrap import wrap
 
 # pylint: disable=E0401
-from prometheus_client import start_http_server, Summary
-# pylint: disable=E0401
 import dotenv
 # pylint: disable=E0401
 import telebot
 
-REQUEST_TIME = Summary('request_processing', 'time_spent')
 # Load environment variables from .env file
 dotenv.load_dotenv()
-
-# Request handler
-@REQUEST_TIME.time()
-def process_request(test):
-    """Request handler"""
-    time.sleep(test)
 
 # Set locale for output in Russian language
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
@@ -61,7 +50,4 @@ def handle_date(message):
 
 # Launch bot
 if __name__ == '__main__':
-    start_http_server(8000)
-    while True:
-        process_request(random.random())
     bot.polling()
