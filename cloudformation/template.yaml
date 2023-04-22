@@ -18,7 +18,7 @@ Resources:
           amazon-linux-extras install docker -y
           systemctl start docker
           usermod -aG docker ec2-user
-          docker login -u ivshkvs -p dckr_pat_w1f9n80eI3PRBXwH_oQZszObTPQ
+          docker login -u secretname -p secretkey
           docker network create prometheus-network --driver bridge
           docker run -d --network prometheus-network ivshkvs/tg_bot:latest
           docker run -d --network prometheus-network -p 9090:9090 bitnami/prometheus
