@@ -1,3 +1,4 @@
+---
 name: CI/CD (Flake8, Pylint, Artifact, Dockerhub)
 
 on:
@@ -121,3 +122,4 @@ jobs:
           --stack-name TELEGRAM-BOT \
           --template-file ./cloudformation/template.yaml \
           --capabilities CAPABILITY_IAM
+---
